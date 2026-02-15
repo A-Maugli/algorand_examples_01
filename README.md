@@ -1,6 +1,8 @@
 # Algorand app creation and deletion using Puya-ts
 
-## Current patterns for app creation (Feb. 2026)
+Date created: 15-Feb-2025
+
+## Current patterns for app creation
 
 Note: Only the bare call pattern works without `createParams` today. 
 
@@ -28,19 +30,27 @@ Note: Only the bare call pattern works without `createParams` today.
 
 ### Algorand contracts
 
-<a href="./src/lifeCycleHybrid.algo.ts">App using **bare call** for app creation and deletion</a>
+<a href="./smart_contracts/lifeCycleHybrid.algo.ts">App using **bare call** for app creation and deletion</a>
 
-<a href="./src/lifeCycleConventional.algo.ts">App using **conventional routing** for app creation and deletion</a>
+<a href="./smart_contracts/lifeCycleConventional.algo.ts">App using **conventional routing** for app creation and deletion</a>
 
-<a href="./src/lifeCycleAbi.algo.ts">App using **ABI routing** for app creation and deletion</a>
+<a href="./smart_contracts/lifeCycleAbi.algo.ts">App using **ABI routing** for app creation and deletion</a>
 
 ### Algorand contract testing
 
-<a href="./src/lifeCycleHybrid.e2e.spec.ts">Testing the app using **bare call** for app creation and deletion</a>
+<a href="./smart_contracts/lifeCycleHybrid.e2e.spec.ts">Testing the app using **bare call** for app creation and deletion</a>
 
-<a href="./src/lifeCycleConventional.e2e.spec.ts">Testing the app using **conventional routing** for app creation and deletion</a>
+<a href="./smart_contracts/lifeCycleConventional.e2e.spec.ts">Testing the app using **conventional routing** for app creation and deletion</a>
 
-<a href="./src/lifeCycleAbi.e2e.spec.ts">Testing the app using **ABI routing** for app creation and deletion</a>
+<a href="./smart_contracts/lifeCycleAbi.e2e.spec.ts">Testing the app using **ABI routing** for app creation and deletion</a>
+
+### Commands to run after GIT checkout
+```
+algokit localnet start
+npm install
+npm run build
+npm run test
+```
 
 ## References
 
@@ -49,3 +59,4 @@ Note: Only the bare call pattern works without `createParams` today.
 <a href="https://algorandfoundation.github.io/puya-ts/documents/Reference_docs.ABI_Routing.html">Algorand Typescript, ABI routing</a>
 
 <a href="https://github.com/algorandfoundation/algokit-utils-ts/blob/main/docs/capabilities/app-client.md">Algokit-utils-ts, App client and App factory</a>
+

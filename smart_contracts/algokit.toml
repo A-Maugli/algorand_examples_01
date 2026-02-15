@@ -1,0 +1,5 @@
+[algokit]
+min_version = "v1.12.1"
+
+[project]
+projects_root_path = './smart_contracts'
