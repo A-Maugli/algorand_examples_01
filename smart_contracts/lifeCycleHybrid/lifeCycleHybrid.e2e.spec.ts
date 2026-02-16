@@ -4,11 +4,11 @@ import { algorandFixture } from '@algorandfoundation/algokit-utils/testing'
 import { AlgoAmount } from '@algorandfoundation/algokit-utils/types/amount'
 import { Address } from 'algosdk'
 import { beforeAll, beforeEach, describe, expect, test } from 'vitest'
-import { LifeCycleAbiFactory } from './artifacts/LifeCycleAbiClient'
+import { LifeCycleHybridClient, LifeCycleHybridFactory,  } from '../artifacts/lifeCycleHybrid/LifeCycleHybridClient'
 
-describe('lifeCycleAbi contract', () => {
+describe('LifeCycleHybrid contract', () => {
   const localnet = algorandFixture()
-  let appClientGlobal: any
+  let clientGlobal: LifeCycleHybridClient
 
   beforeAll(async () => {
     Config.configure({
@@ -17,28 +17,25 @@ describe('lifeCycleAbi contract', () => {
     })
     registerDebugEventHandlers()
     await localnet.newScope()
-    appClientGlobal = await deploy(localnet.context.testAccount)
+    const { client } = await deploy(localnet.context.testAccount)
+    clientGlobal = client
   })
 
   beforeEach(localnet.newScope)
 
   const deploy = async (account: Address) => {
-    const factory = localnet.algorand.client.getTypedAppFactory(LifeCycleAbiFactory, {
+    const factory = localnet.algorand.client.getTypedAppFactory(LifeCycleHybridFactory, {
       defaultSender: account,
     })
 
     const { appClient, result } = await factory.deploy({
       onUpdate: 'append',
       onSchemaBreak: 'append',
-      createParams: {
-        method: 'createApp',
-        args: { param: 'Kilroy was here' },
-      },
     })
     // check logs for createApp call 
     const logArray = (result as any).confirmation.logs[0]; 
     const createLog = new TextDecoder().decode(logArray)
-    expect(createLog).toBe('createApp is called with param: Kilroy was here');
+    expect(createLog).toBe('createApp is called with no arguments');
 
     await localnet.algorand.send.payment({
       receiver: appClient.appAddress,
@@ -50,15 +47,15 @@ describe('lifeCycleAbi contract', () => {
   }
 
   test('says hello', async () => {
-    const result = await appClientGlobal.client.send.hello({ args: { name: 'World' } })
+    const result = await clientGlobal.send.hello({ args: { name: 'World' } })
     expect(result.return).toBe('Hello, World')
   })
 
   test('deleteApp', async () => {
-    const result = await appClientGlobal.client.send.delete.deleteApp({ args: { param: 'Kilroy was here, too' } })
+    const result = await clientGlobal.send.delete.bare()
     // check logs for deleteApp call
     const logArray = (result as any).confirmation.logs[0]; 
     const createLog = new TextDecoder().decode(logArray)
-    expect(createLog).toBe('deleteApp is called with param: Kilroy was here, too');
+    expect(createLog).toBe('deleteApp is called with no arguments');
   })
 })

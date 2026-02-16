@@ -12,6 +12,8 @@
     "audit": "better-npm-audit audit",
     "format": "prettier --write .",
     "test": "vitest run --coverage",
+    "test:one" : "sh -c 'vitest run $0'",
+    "test:calculator": "vitest run smart_contracts/calculator.e2e.spec.ts",
     "test:watch": "vitest watch",
     "check-types": "tsc --noEmit"
   },

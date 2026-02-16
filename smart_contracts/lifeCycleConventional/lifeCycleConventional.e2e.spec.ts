@@ -4,9 +4,9 @@ import { algorandFixture } from '@algorandfoundation/algokit-utils/testing'
 import { AlgoAmount } from '@algorandfoundation/algokit-utils/types/amount'
 import { Address } from 'algosdk'
 import { beforeAll, beforeEach, describe, expect, test } from 'vitest'
-import { LifeCycleConventionalClient, LifeCycleConventionalFactory,  } from './artifacts/LifeCycleConventionalClient'
+import { LifeCycleConventionalClient, LifeCycleConventionalFactory,  } from '../artifacts/lifeCycleConventional/LifeCycleConventionalClient'
 
-describe('lifeCycleConventional contract', () => {
+describe('LifeCycleConventional contract', () => {
   const localnet = algorandFixture()
   let clientGlobal: LifeCycleConventionalClient
 

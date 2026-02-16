@@ -30,19 +30,15 @@ Note: Only the bare call pattern works without `createParams` today.
 
 ### Algorand contracts
 
-<a href="./smart_contracts/lifeCycleHybrid.algo.ts">App using **bare call** for app creation and deletion</a>
+<a href="./smart_contracts/lifeCycleHybrid/lifeCycleHybrid.algo.ts">App using **bare call** for app creation and deletion</a>
 
-<a href="./smart_contracts/lifeCycleConventional.algo.ts">App using **conventional routing** for app creation and deletion</a>
+<a href="./smart_contracts/lifeCycleConventional/lifeCycleConventional.algo.ts">App using **conventional routing** for app creation and deletion</a>
 
-<a href="./smart_contracts/lifeCycleAbi.algo.ts">App using **ABI routing** for app creation and deletion</a>
+<a href="./smart_contracts/lifeCycleAbi/lifeCycleAbi.algo.ts">App using **ABI routing** for app creation and deletion</a>
 
-### Algorand contract testing
+<a href="./smart_contracts/calculator/calculator.algo.ts">Calculator</a>
 
-<a href="./smart_contracts/lifeCycleHybrid.e2e.spec.ts">Testing the app using **bare call** for app creation and deletion</a>
-
-<a href="./smart_contracts/lifeCycleConventional.e2e.spec.ts">Testing the app using **conventional routing** for app creation and deletion</a>
-
-<a href="./smart_contracts/lifeCycleAbi.e2e.spec.ts">Testing the app using **ABI routing** for app creation and deletion</a>
+<a href="./smart_contracts/mapping/mapping.algo.ts">Ethereum-like mapping using boxes</a>
 
 ### Commands to run after GIT checkout
 ```
@@ -50,6 +46,15 @@ algokit localnet start
 npm install
 npm run build
 npm run test
+```
+
+To run a specific test file, e.g. `calculator.e2e.spec.ts`, use command
+```
+npx vitest run calculator.e2e.spec.ts 
+```
+or
+```
+npm run test:one calculator.e2e.spec.ts
 ```
 
 ## References

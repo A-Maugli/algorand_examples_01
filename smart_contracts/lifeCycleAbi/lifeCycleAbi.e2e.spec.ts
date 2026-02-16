@@ -4,11 +4,11 @@ import { algorandFixture } from '@algorandfoundation/algokit-utils/testing'
 import { AlgoAmount } from '@algorandfoundation/algokit-utils/types/amount'
 import { Address } from 'algosdk'
 import { beforeAll, beforeEach, describe, expect, test } from 'vitest'
-import { LifeCycleHybridClient, LifeCycleHybridFactory,  } from './artifacts/LifeCycleHybridClient'
+import { LifeCycleAbiFactory, LifeCycleAbiClient } from '../artifacts/lifeCycleAbi/LifeCycleAbiClient'
 
-describe('lifeCycleHybrid contract', () => {
+describe('LifeCycleAbi contract', () => {
   const localnet = algorandFixture()
-  let clientGlobal: LifeCycleHybridClient
+  let clientGlobal: LifeCycleAbiClient
 
   beforeAll(async () => {
     Config.configure({
@@ -24,18 +24,22 @@ describe('lifeCycleHybrid contract', () => {
   beforeEach(localnet.newScope)
 
   const deploy = async (account: Address) => {
-    const factory = localnet.algorand.client.getTypedAppFactory(LifeCycleHybridFactory, {
+    const factory = localnet.algorand.client.getTypedAppFactory(LifeCycleAbiFactory, {
       defaultSender: account,
     })
 
     const { appClient, result } = await factory.deploy({
       onUpdate: 'append',
       onSchemaBreak: 'append',
+      createParams: {
+        method: 'createApp',
+        args: { param: 'Kilroy was here' },
+      },
     })
     // check logs for createApp call 
     const logArray = (result as any).confirmation.logs[0]; 
     const createLog = new TextDecoder().decode(logArray)
-    expect(createLog).toBe('createApp is called with no arguments');
+    expect(createLog).toBe('createApp is called with param: Kilroy was here');
 
     await localnet.algorand.send.payment({
       receiver: appClient.appAddress,
@@ -52,10 +56,10 @@ describe('lifeCycleHybrid contract', () => {
   })
 
   test('deleteApp', async () => {
-    const result = await clientGlobal.send.delete.bare()
+    const result = await clientGlobal.send.delete.deleteApp({ args: { param: 'Kilroy was here, too' } })
     // check logs for deleteApp call
     const logArray = (result as any).confirmation.logs[0]; 
     const createLog = new TextDecoder().decode(logArray)
-    expect(createLog).toBe('deleteApp is called with no arguments');
+    expect(createLog).toBe('deleteApp is called with param: Kilroy was here, too');
   })
 })

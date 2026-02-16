@@ -1,0 +1,16 @@
+#!/bin/bash
+contract=calculator
+Contract="${contract^}"
+
+npx @algorandfoundation/puya-ts \
+./$contract.algo.ts \
+--output-source-map \
+--out-dir ../artifacts/$contract
+
+app="../artifacts/"$contract"/"$Contract".arc56.json"
+output="../artifacts/"$contract"/"$Contract"Client.ts"
+# echo $app
+# echo $output
+npx @algorandfoundation/algokit-client-generator generate \
+--application $app \
+--output $output
